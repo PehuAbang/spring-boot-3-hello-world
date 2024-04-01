@@ -18,19 +18,18 @@ steps:
 - task: Cache@2
   inputs:
     key: 'maven | "$(Agent.OS)" | **/pom.xml'
+    path: '$(MAVEN_CACHE_FOLDER)'
     restoreKeys: |
       maven | "$(Agent.OS)"
       maven
-    path: $(MAVEN_CACHE_FOLDER)
   displayName: Cache Maven local repo
-- task: Maven@3
+- task: Maven@4
   inputs:
-    mavenPomFile: 'pom.xml' # 你的 Maven 项目的 pom.xml 文件路径
-    goals: 'clean install' # Maven 构建的目标，例如 clean install
-    publishJUnitResults: true # 是否发布 JUnit 测试结果，根据需要设置
-    # testResultsFiles: '**/surefire-reports/TEST-*.xml' # JUnit 测试结果文件的路径
-    javaHomeOption: 'JDKVersion' # 选择 JDK 版本
+    mavenPomFile: 'pom.xml'
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.17'
-    mavenVersionOption: 'Default' # Maven 版本设置
-    mavenAuthenticateFeed: false # 是否需要认证
-    effectivePomSkip: false # 是否跳过有效的 POM
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
