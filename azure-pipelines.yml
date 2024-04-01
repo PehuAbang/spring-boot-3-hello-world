@@ -16,7 +16,7 @@ variables:
 steps:
 - task: Cache@2
   inputs:
-    key: 'maven|"Linux"|NrQ7ukPk1oZi3FQ8Dk2Xzw6OWRIJoN5hNU9Qo0kcCzw='
+    key: 'maven | "$(Agent.OS)" | **/pom.xml'
     restoreKeys: |
       maven | "$(Agent.OS)"
       maven
