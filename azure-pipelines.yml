@@ -9,6 +9,7 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+
 steps:
 - task: Maven@3
   inputs:
@@ -17,6 +18,7 @@ steps:
     publishJUnitResults: true # 是否发布 JUnit 测试结果，根据需要设置
     # testResultsFiles: '**/surefire-reports/TEST-*.xml' # JUnit 测试结果文件的路径
     javaHomeOption: 'JDKVersion' # 选择 JDK 版本
+    jdkVersionOption: '1.17'
     mavenVersionOption: 'Default' # Maven 版本设置
     mavenAuthenticateFeed: false # 是否需要认证
     effectivePomSkip: false # 是否跳过有效的 POM
