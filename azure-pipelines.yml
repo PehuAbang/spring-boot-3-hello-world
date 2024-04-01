@@ -11,10 +11,13 @@ pool:
 
 
 steps:
+- script: |
+    mkdir -p $HOME/.m2/repository
+  displayName: 'Create Maven repository directory if not exists'
 - task: Cache@2
   inputs:
     key: 'maven | "$(Agent.OS)" | **/pom.xml'
-    path: '$(Pipeline.Workspace)/.m2/repository'
+    path: '$HOME/.m2/repository'
   displayName: Cache Maven local repo
 - task: Maven@4
   inputs:
