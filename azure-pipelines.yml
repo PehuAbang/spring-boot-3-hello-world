@@ -11,6 +11,10 @@ pool:
 
 
 steps:
+- task: Cache@2
+  inputs:
+    key: 'maven | "$(Agent.OS)" | **/pom.xml'
+    path: '$HOME/.m2/repository'
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml' # 你的 Maven 项目的 pom.xml 文件路径
