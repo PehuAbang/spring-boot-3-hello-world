@@ -6,29 +6,41 @@
 trigger:
 - main
 
-pool:
-  vmImage: ubuntu-latest
+#trigger:
+# - feature/performace-m5
 
-variables:
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:  
+  # Environment name  Cache Maven local repo
   MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
   MAVEN_OPTS: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
 
 steps:
-- task: Cache@2
-  inputs:
-    key: 'maven | "$(Agent.OS)" | **/pom.xml'
-    restoreKeys: |
-      maven | "$(Agent.OS)"
-      maven
-    path: $(MAVEN_CACHE_FOLDER)
-  displayName: Cache Maven local repo
-- task: Maven@4
-  inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: false
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.17'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
+    - task: Cache@2
+      inputs:
+        key: 'maven | "$(Agent.OS)" | **/pom.xml'
+        restoreKeys: |
+          maven | "$(Agent.OS)"
+          maven
+        path: $(MAVEN_CACHE_FOLDER)
+      displayName: Cache Maven local repo
+
+    - task: Maven@3
+      displayName: 'Maven Package'
+      inputs:
+        goals: 'package'
+        mavenPomFile: './pom.xml'
+        mavenOptions: '-Xmx3072m  $(MAVEN_OPTS)'
+        options: '-Dmaven.test.skip=true -Dfile.encoding=UTF-8 --settings settings.xml -DaltDeploymentRepository=bcrm2::default::https://pkgs.dev.azure.com/iisiD200542-a-m/_packaging/bcrm2/maven/v1'
+        publishJUnitResults: false
+        #testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.17'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: true
+        effectivePomSkip: false
+        checkStyleRunAnalysis: false
+        pmdRunAnalysis: false
+        findBugsRunAnalysis: false
