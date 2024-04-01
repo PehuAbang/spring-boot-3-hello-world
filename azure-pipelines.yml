@@ -33,7 +33,7 @@ steps:
         goals: 'package'
         mavenPomFile: './pom.xml'
         mavenOptions: '-Xmx3072m  $(MAVEN_OPTS)'
-        options: '-Dmaven.test.skip=true -Dfile.encoding=UTF-8 --settings settings.xml -DaltDeploymentRepository=bcrm2::default::https://pkgs.dev.azure.com/iisiD200542-a-m/_packaging/bcrm2/maven/v1'
+        options: '-Dmaven.test.skip=true -Dfile.encoding=UTF-8 -DaltDeploymentRepository=bcrm2::default::https://pkgs.dev.azure.com/iisiD200542-a-m/_packaging/bcrm2/maven/v1'
         publishJUnitResults: false
         #testResultsFiles: '**/surefire-reports/TEST-*.xml'
         javaHomeOption: 'JDKVersion'
