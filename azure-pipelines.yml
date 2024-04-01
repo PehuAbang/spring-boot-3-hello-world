@@ -1,0 +1,22 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml' # 你的 Maven 项目的 pom.xml 文件路径
+    goals: 'clean install' # Maven 构建的目标，例如 clean install
+    publishJUnitResults: true # 是否发布 JUnit 测试结果，根据需要设置
+    # testResultsFiles: '**/surefire-reports/TEST-*.xml' # JUnit 测试结果文件的路径
+    javaHomeOption: 'JDKVersion' # 选择 JDK 版本
+    mavenVersionOption: 'Default' # Maven 版本设置
+    mavenAuthenticateFeed: false # 是否需要认证
+    effectivePomSkip: false # 是否跳过有效的 POM
